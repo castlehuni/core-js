@@ -5,3 +5,28 @@ h1 {
   /* transform: translate(-50%,-50%); */
   translate: -50% -50%;
 }
+
+ul{
+  list-style: none;
+}
+
+.userCard {
+  border: 1px solid black;
+  padding: 2rem;
+
+  & img{
+    width:100px;
+    height: 100px;
+    background-color: gray;
+  }
+
+  .strong{
+    font-weight: bold;
+    color: black;
+  }
+  
+}
+
+span{
+  display: inline-block;
+}
