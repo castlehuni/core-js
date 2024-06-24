@@ -17,35 +17,27 @@
     <script defer src="./chapter/dom/09.delegation.js"></script>
   </head>
   <body>
-    <!-- <h1>
-      <span class="first hello" sayhi="hola" data-value="10">hello</span>
-      <span class="second" onclick="handler()">javascript</span>
-      <span class="third">bye</span>
-    </h1> -->
-    <!-- <div class="ground">
-      <img src="https://en.js.cx/clipart/ball.svg" id="ball" alt="축구공">
-    </div> -->
-    <!-- <section class="section">
-      <article class="article">
-        <p class="p"></p>
-      </article>
-    </section> -->
-
-    <nav>
-      <ul>
-        <li class="about" data-name="about">
-          😀
-          <span>ABOUT</span>
-        </li>
-        <li class="home" data-name="home">
-          🏠
-          <span>HOME</span>
-        </li>
-        <li class="contact" data-name="contact">
-          📞
-          <span>CONTACT</span>
-        </li>
-      </ul>
-    </nav>
+    <form class="calculator">
+      <div class="first">
+        <label for="firstNumber">First Value</label>
+        <input type="number" name="first" id="firstNumber" required/>
+      </div>
+      
+      <div class="operator"> 
+       +
+      </div>
+      
+      <div class="second">
+        <label for="secondNumber">Second Value</label>
+        <input type="number" name="second" id="secondNumber" required/>
+      </div>
+    
+      <input id="clear" type="submit" value="clear"/>
+  
+      <div class="result">
+        -
+      </div>
+  
+    </form>
   </body>
 </html>
