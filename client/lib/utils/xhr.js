@@ -156,32 +156,97 @@ xhr.delete = (url,성공,실패) =>{
 /*                                     xhr Promise 방식                       */
 /* -------------------------------------------------------------------------- */
 
-function xhrPromise(method,url,body){
+const defaultOptions = {
+  method:'GET',
+  url: '',
+  body: null,
+  errorMessage:'서버와의 통신이 원활하지 않습니다.',
+  headers:{
+    'Content-Type':'application/json',
+    'Access-Control-Allow-Origin': '*' // CORS Error를 frontend에서 해결할 수 있는 최대한의 노력
+  }
+}
+
+// enumerable => 열거 가능한 => for..of/ for..in
+// iterable   => 순환 가능한 => for..of 
+// immutable  => 불변의
+
+// const arr = [1,2,3];
+// const newArr = [...arr,4]
+
+export function xhrPromise(options){
+
+  const {method,url,body,headers,errorMessage} = {
+    ...defaultOptions,
+    ...options,
+    headers:{
+      ...defaultOptions.headers,
+      ...options.headers
+    }
+  }
+
   const xhr = new XMLHttpRequest();
 
-  xhr.open(method, url);
+  xhr.open(method,url);
+
+  Object.entries(headers).forEach(([key,value])=>{
+    xhr.setRequestHeader(key,value);
+  })
 
   xhr.send(JSON.stringify(body));
 
   return new Promise((resolve, reject) => {
+    
     xhr.addEventListener('readystatechange',()=>{
       if(xhr.readyState === 4){
         if(xhr.status >= 200 && xhr.status < 400){
-          // 성공
           resolve(JSON.parse(xhr.response));
         }
         else{
-          // 실패
-          reject({message: "알 수 없는 오류"});
+          reject({message:errorMessage});
         }
       }
     })
   })
 }
 
-xhrPromise('GET',ENDPOINT,{name:'tiger'})
+xhrPromise({url:ENDPOINT})
 .then((res)=>{
-  // console.log(res);
+  // console.log( res );
 })
 
 
+xhrPromise.get = (url) => {
+  return xhrPromise({ url }) // promise는 데이터를 받을 때 then으로 받아야 하는데 then으로 받으려면 프로미스 객체가 나와야 하므로 리턴해줘야함
+}
+
+xhrPromise.post = (url,body) => {
+  return xhrPromise({
+    url,
+    body,
+    method:'POST'
+  })
+}
+
+
+xhrPromise.put = (url,body) => {
+  return xhrPromise({
+    url,
+    body,
+    method:'PUT'
+  })
+}
+
+
+xhrPromise.delete = (url) => {
+  return xhrPromise({
+    url,
+    method:'DELETE'
+  })
+}
+
+// 위 코드 축약형
+// xhrPromise.get = (url) => xhrPromise({ url })
+// xhrPromise.post = (url,body) => xhrPromise({ url, body, method:'POST' })
+// xhrPromise.put = (url,body) => xhrPromise({ url, body, method:'PUT' })
+// xhrPromise.delete = url => xhrPromise({ url, method:'DELETE' })
