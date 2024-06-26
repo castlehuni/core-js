@@ -81,14 +81,14 @@ function xhr({
 // 1. 무조건 매개변수 순서에 맞게 작성 ✅
 // 2. 매개변수 안쓰면?
 
-xhr({
-  성공(data) {
-    console.log(data);
-  },
-  body: user,
-  실패() {},
-  url: ENDPOINT,
-});
+// xhr({
+//   성공(data) {
+//     console.log(data);
+//   },
+//   body: user,
+//   실패() {},
+//   url: ENDPOINT,
+// });
 
 const options = {
   method: 'POST',
@@ -149,3 +149,39 @@ xhr.delete = (url,성공,실패) =>{
     실패
    })
 }
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                                     xhr Promise 방식                       */
+/* -------------------------------------------------------------------------- */
+
+function xhrPromise(method,url,body){
+  const xhr = new XMLHttpRequest();
+
+  xhr.open(method, url);
+
+  xhr.send(JSON.stringify(body));
+
+  return new Promise((resolve, reject) => {
+    xhr.addEventListener('readystatechange',()=>{
+      if(xhr.readyState === 4){
+        if(xhr.status >= 200 && xhr.status < 400){
+          // 성공
+          resolve(JSON.parse(xhr.response));
+        }
+        else{
+          // 실패
+          reject({message: "알 수 없는 오류"});
+        }
+      }
+    })
+  })
+}
+
+xhrPromise('GET',ENDPOINT,{name:'tiger'})
+.then((res)=>{
+  // console.log(res);
+})
+
+
