@@ -37,7 +37,7 @@ const defaultOptions = {
 }
 
 
-function delayP(options) {
+export function delayP(options) {
 
   let config = {...defaultOptions} // option에 숫자가 들어오게 되면 구조분해할당 자체가 안되므로 기본 옵션 먼저 구조할당 함
 
@@ -171,4 +171,4 @@ async function getData(){
   insertLast(document.body,`<img src="${data.sprites.other.showdown['front_default']}" alt="" />`)
 }
 
-getData()
+// getData()
