@@ -1,23 +1,15 @@
-class Button extends HTMLElement {
-  constructor() {
-    super();
+const template = document.createElement('template');
+template.innerHTML = `
+  <div>bye</div>
+  <div>javascript</div>
+`;
 
-    // c-버튼의 쉐도우 돔을 열어줘
-    this.attachShadow({ mode: 'open' }); // 웹 컴포넌트만의 전용코드는 아님(div같은 태그도 사용 가능)
+console.log(template);
 
-    // 그리고 그 안에 내가 원하는 태그를 넣을거야
-    this.shadowRoot.innerHTML = `
-      <button>hello</button>
-    `;
-  }
+const app = document.querySelector('#app');
+const temp = document.querySelector('#temp');
 
-  connectedCallback() {}
+// const clone = temp.content.cloneNode(true); // clone을 통해 temp의 콘텐트를 복사함 => 템플릿을 바로는 못넣기 때문에
 
-  disconnectedCallback() {}
-}
-
-customElements.define('c-button', Button);
-
-console.log(
-  document.querySelector('c-button').shadowRoot.querySelector('button')
-);
+const clone = template.content.cloneNode(true); // 훼손될 수 있으므로 html에서 작성한 코드나 스크립트로 만든 template도 clone에서 사용하는 것이 좋음
+app.appendChild(clone);
