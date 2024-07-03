@@ -1,22 +1,15 @@
-class UserCard extends HTMLElement {
-  constructor() {
-    super();
+import { TodoList } from './components/TodoList/TodoList.js';
+import { TodoItem } from './components/TodoItem/TodoItem.js';
 
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = /* html */ `
-      <button type="button">btn</button>
-    `;
+const app = document.getElementById('app');
 
-    this.button = this.shadowRoot.querySelector('button');
-  }
+const defineElements = () => {
+  customElements.define('todo-app', TodoList);
+  customElements.define('todo-item', TodoItem);
+};
 
-  connectedCallback() {
-    this.button.addEventListener('click', () => this.clickMe());
-  }
+defineElements();
 
-  clickMe() {
-    console.log(this);
-  }
-}
+const todoElement = document.createElement('todo-app');
 
-customElements.define('user-card', UserCard);
+app.append(todoElement);
