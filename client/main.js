@@ -1,15 +1,18 @@
-const template = document.createElement('template');
-template.innerHTML = `
-  <div>bye</div>
-  <div>javascript</div>
-`;
+class UserCard extends HTMLElement {
+  constructor() {
+    super();
 
-console.log(template);
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `
+      <div> nickName : kind-tiger </div>
+      <slot name="username"></slot>
+      <slot name="age"></slot>
+      <slot name="gender"></slot>
+      <slot name="common"></slot>
+      <slot></slot>
+      <slot name='email'>any@naver.com</slot>
+    `;
+  }
+}
 
-const app = document.querySelector('#app');
-const temp = document.querySelector('#temp');
-
-// const clone = temp.content.cloneNode(true); // clone을 통해 temp의 콘텐트를 복사함 => 템플릿을 바로는 못넣기 때문에
-
-const clone = template.content.cloneNode(true); // 훼손될 수 있으므로 html에서 작성한 코드나 스크립트로 만든 template도 clone에서 사용하는 것이 좋음
-app.appendChild(clone);
+customElements.define('user-card', UserCard);
